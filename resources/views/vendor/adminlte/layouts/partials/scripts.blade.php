@@ -7,15 +7,12 @@
 @stack('scripts')
 
 <script type="text/javascript">
-
     $(document).ready(function () {
-
         window.setTimeout(function() {
-            $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+            $(".callout").fadeTo(1000, 0).slideUp(1000, function(){
                 $(this).remove();
             });
         }, 1500);
-
     });
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

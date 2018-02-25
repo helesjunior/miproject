@@ -42,10 +42,13 @@ desired effect
 
         @include('adminlte::layouts.partials.contentheader')
         @if(Session::has('message'))
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {!! Session::get('message') !!}
+            <br>
+            <div class="row" align="right">
+                <div class="callout callout-success" style="width: 300px">
+                    <i class="icon fa fa-check"></i> {!! Session::get('message') !!}
+                </div>
             </div>
+
         @endif
         <!-- Main content -->
         <section class="content">

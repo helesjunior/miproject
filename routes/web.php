@@ -12,12 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('home');
 });
 
 Route::prefix('admin')->group(function (){
-    Auth::routes();
-
     Route::group([
         'namespace' => 'Admin\\',
         'as' => 'admin.',

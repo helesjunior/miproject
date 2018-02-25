@@ -20,7 +20,9 @@ class UsersController extends Controller
 
     public function __construct(Table $table)
     {
+        $this->middleware('auth');
         $this->table = $table;
+
     }
 
     public function index()
@@ -28,11 +30,6 @@ class UsersController extends Controller
         $this->table
             ->model(User::class)
             ->columns([
-                [
-                    'label' => 'ID',
-                    'name' => 'id',
-                    'order' => true //true, asc ou desc
-                ],
                 [
                     'label' => 'CPF / CNPJ',
                     'name' => 'cpfcnpj',

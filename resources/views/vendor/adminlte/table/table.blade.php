@@ -10,13 +10,13 @@
     </div>
     <button type="submit" class="btn btn-primary">Pesquisar</button>
 </form>
-<div align="right">
+<div class="perpage" align="right">
     <span>Mostrar </span>
-    <select name="rows-per-page" data-url="#">
-        <option value="10" >10</option>
-        <option value="10" >20</option>
-        <option value="10" >50</option>
-        <option value="10" >100</option>
+    <select name="rows-per-page" >
+        <option value="10" {!! \Request::get('perpage') == 10 ? 'selected' : '' !!} >10</option>
+        <option value="20" {!! \Request::get('perpage') == 20 ? 'selected' : '' !!}>20</option>
+        <option value="50" {!! \Request::get('perpage') == 50 ? 'selected' : '' !!}>50</option>
+        <option value="100" {!! \Request::get('perpage') == 100 ? 'selected' : '' !!}>100</option>
     </select>
     <span>por página</span>
 </div>
@@ -89,7 +89,7 @@
             Página <b>{!! $table->rows()->currentPage() !!}</b> de <b>{!! $table->rows()->lastPage() !!}</b>. Total de <b>{!! $table->rows()->total() !!}</b> registros.
         </div>
         <div class="col-12 col-md-8" align="right">
-            {!! $table->rows()->appends(['search' => \Request::get('search'),'field_order' => \Request::get('field_order'),'order' =>\Request::get('order')])->links() !!}
+            {!! $table->rows()->appends(['search' => \Request::get('search'),'field_order' => \Request::get('field_order'),'order' =>\Request::get('order'), 'perpage' =>\Request::get('perpage')])->links() !!}
         </div>
     </div>
 @else
@@ -114,12 +114,35 @@
                     @if(\Request::get('page'))
                         url += "page={{\Request::get('page')}}&";
                     @endif
-                            @if(\Request::get('search'))
+                    @if(\Request::get('perpage'))
+                        url += "perpage={{\Request::get('perpage')}}&";
+                    @endif
+                    @if(\Request::get('search'))
                         url += "search={{\Request::get('search')}}&";
                     @endif
                         url+='field_order='+field+'&order='+order;
                     window.location = url;
                 })
+        });
+        $('.perpage select').change(function(){
+            var url = "{{url()->current()}}?";
+
+            url += 'perpage='+$(this).val()+'&';
+
+            @if(\Request::get('search'))
+                url += "search={{\Request::get('search')}}&";
+            @endif
+            @if(\Request::get('page'))
+                url += "page={{\Request::get('page')}}&";
+            @endif
+            @if(\Request::get('field_order'))
+                url += "field_order={{\Request::get('field_order')}}&";
+            @endif
+            @if(\Request::get('order'))
+                url += "order={{\Request::get('order')}}&";
+            @endif
+
+            window.location = url;
         });
     </script>
 @endpush

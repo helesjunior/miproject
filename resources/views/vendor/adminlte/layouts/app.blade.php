@@ -42,8 +42,9 @@ desired effect
 
         @include('adminlte::layouts.partials.contentheader')
         @if(Session::has('message'))
-            <div class="container hidden-print">
-                {!! Alert::success(Session::get('message'))->close() !!}
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {!! Session::get('message') !!}
             </div>
         @endif
         <!-- Main content -->

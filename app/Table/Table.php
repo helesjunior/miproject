@@ -22,7 +22,7 @@ class Table
      */
     private $model = null;
     private $modelOriginal = null;
-    private $perPage = 15;
+    private $perPage = 10;
     public function paginate($perPage)
     {
         $this->perPage = $perPage;
@@ -119,9 +119,27 @@ class Table
         array_unshift($columns, $keyName);
         $this->applyFilters();
         $this->applyOrders();
+        $this->perPage();
         $this->rows = $this->model->paginate($this->perPage, $columns);
         return $this;
     }
+
+    protected function perPage(){
+        if(\Request::has('perpage') and is_numeric(\Request::get('perpage'))){
+            $perpage = \Request::get('perpage');
+            if($perpage == 10){
+                $this->perPage = 10;
+            }elseif ($perpage == 20){
+                $this->perPage = 20;
+            }elseif ($perpage == 50){
+                $this->perPage = 50;
+            }elseif ($perpage == 100){
+                $this->perPage = 100;
+            }
+        }
+        return $this;
+    }
+
     protected function applyFilters()
     {
         foreach ($this->filters as $filter) {

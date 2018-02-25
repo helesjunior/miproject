@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Forms\UserForm;
+use App\Forms\UserFormEdit;
 use App\Models\User;
 use App\Table\Table;
 use Illuminate\Http\Request;
@@ -76,7 +77,6 @@ class UsersController extends Controller
             //        'route' => 'admin.users.update'
             //    ]
             //])
-            ->paginate(10)
             ->search();
 
         return view('adminlte::modules.admin.users.index', ['table' => $this->table]);
@@ -115,8 +115,9 @@ class UsersController extends Controller
         }
 
         $data = $form->getFieldValues();
-
-        User::createFully($data);
+        $password = str_random(6);
+        $data['password'] = $password;
+        User::create($data);
 
         $request->session()->flash('message', 'Usuário criado com sucesso!');
 
@@ -143,7 +144,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $form = \FormBuilder::create(UserForm::class,[
+        $form = \FormBuilder::create(UserFormEdit::class,[
             'url' => route('admin.users.update', [ 'user' => $user->id ]),
             'method' => 'PUT',
             'model' => $user
@@ -160,7 +161,7 @@ class UsersController extends Controller
      */
     public function update(User $user)
     {
-        $form = \FormBuilder::create(UserForm::class, [
+        $form = \FormBuilder::create(UserFormEdit::class, [
             'data' => ['id' => $user->id]
         ]);
 

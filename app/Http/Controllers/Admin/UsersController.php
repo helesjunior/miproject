@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Forms\UserForm;
-use App\Forms\UserFormEdit;
 use App\Models\User;
 use App\Table\Table;
 use Illuminate\Http\Request;
@@ -141,7 +140,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $form = \FormBuilder::create(UserFormEdit::class,[
+        $form = \FormBuilder::create(UserForm::class,[
             'url' => route('admin.users.update', [ 'user' => $user->id ]),
             'method' => 'PUT',
             'model' => $user
@@ -158,7 +157,7 @@ class UsersController extends Controller
      */
     public function update(User $user)
     {
-        $form = \FormBuilder::create(UserFormEdit::class, [
+        $form = \FormBuilder::create(UserForm::class, [
             'data' => ['id' => $user->id]
         ]);
 

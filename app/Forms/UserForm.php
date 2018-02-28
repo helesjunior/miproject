@@ -8,10 +8,13 @@ class UserForm extends Form
 {
     public function buildForm()
     {
+
+        $id = $this->getData('id')??"NULL";
+
         $this
             ->add('cpfcnpj', 'text', [
                 'label' => 'CPF / CNPJ',
-                'rules' => "required|max:18|unique:users,cpfcnpj"
+                'rules' => "required|max:18|unique:users,cpfcnpj,{$id}"
             ])
             ->add('name', 'text', [
                 'label' => 'Nome',
@@ -19,7 +22,7 @@ class UserForm extends Form
             ])
             ->add('email', 'email', [
                 'label' => 'E-mail',
-                'rules' => "required|max:255|email|unique:users,email"
+                'rules' => "required|max:255|email|unique:users,email,{$id}"
             ]);
     }
 }

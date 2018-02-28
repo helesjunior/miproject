@@ -31,11 +31,13 @@ class UserSeeder extends Seeder
         ]);
 
         $faker = Faker\Factory::create();
-        for($i = 0; $i < 500; $i++) {
+        for($i = 0; $i < 4000; $i++) {
+            $random = str_random(11);
+
             App\Models\User::create([
                 'name' => $faker->name,
-                'cpfcnpj' => str_random(11),
-                'email' => $faker->email,
+                'cpfcnpj' => $random,
+                'email' => $random."@teste.com",
                 'password' => bcrypt('123456')
             ]);
         }

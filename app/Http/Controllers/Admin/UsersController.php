@@ -21,7 +21,6 @@ class UsersController extends Controller
     {
         $this->middleware('auth');
         $this->table = $table;
-
     }
 
     public function index()

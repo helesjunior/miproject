@@ -19,12 +19,15 @@
 
             </div>
             <div class="box-body">
-                {!! form($form->add('edit','submit',[
-                    'attr' => [
-                        'class' => 'btn btn-primary'
-                    ],
-                    'label' => Icon::create('floppy-disk').'&nbsp;&nbsp;Editar'
-                ])) !!}
+                <fieldset class="form-group">
+                    <legend>Dados Básicos</legend>
+                    {!! form($form->add('edit','submit',[
+                        'attr' => [
+                            'class' => 'btn btn-primary'
+                        ],
+                        'label' => Icon::create('floppy-disk').'&nbsp;&nbsp;Editar'
+                    ])) !!}
+                </fieldset>
             </div>
             <!-- /.box-body -->
         </div>

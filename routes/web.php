@@ -22,6 +22,7 @@ Route::prefix('admin')->group(function (){
         'middleware' => 'auth'
         ], function (){
            Route::resource('users', 'UsersController');
+           Route::resource('county', 'CountyController');
     });
 });
 

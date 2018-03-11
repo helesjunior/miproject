@@ -31,11 +31,7 @@ class UserSeeder extends Seeder
         ]);
 
         $faker = Faker\Factory::create();
-<<<<<<< HEAD
-        for($i = 0; $i < 500; $i++) {
-=======
         for($i = 0; $i < 400; $i++) {
->>>>>>> 76f459cd494765606a92f133535c7d978a28b024
             $random = str_random(11);
 
             App\Models\User::create([

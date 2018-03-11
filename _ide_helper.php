@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.34 on 2018-02-23 16:54:20.
+ * Generated for Laravel 5.6.7 on 2018-03-05 16:38:38.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -318,7 +318,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Determine if we are running in the console.
+         * Determine if the application is running in the console.
          *
          * @return bool 
          * @static 
@@ -329,7 +329,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Determine if we are running unit tests.
+         * Determine if the application is running unit tests.
          *
          * @return bool 
          * @static 
@@ -718,40 +718,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Define a callback to be used to configure Monolog.
-         *
-         * @param callable $callback
-         * @return $this 
-         * @static 
-         */ 
-        public static function configureMonologUsing($callback)
-        {
-            return \Illuminate\Foundation\Application::configureMonologUsing($callback);
-        }
-        
-        /**
-         * Determine if the application has a custom Monolog configurator.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasMonologConfigurator()
-        {
-            return \Illuminate\Foundation\Application::hasMonologConfigurator();
-        }
-        
-        /**
-         * Get the custom Monolog configurator for the application.
-         *
-         * @return callable 
-         * @static 
-         */ 
-        public static function getMonologConfigurator()
-        {
-            return \Illuminate\Foundation\Application::getMonologConfigurator();
-        }
-        
-        /**
          * Get the current application locale.
          *
          * @return string 
@@ -921,7 +887,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Bind a callback to resolve with Container::call.
          *
-         * @param string $method
+         * @param array|string $method
          * @param \Closure $callback
          * @return void 
          * @static 
@@ -2145,6 +2111,32 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Register a component alias directive.
+         *
+         * @param string $path
+         * @param string $alias
+         * @return void 
+         * @static 
+         */ 
+        public static function component($path, $alias = null)
+        {
+            \Illuminate\View\Compilers\BladeCompiler::component($path, $alias);
+        }
+        
+        /**
+         * Register an include alias directive.
+         *
+         * @param string $path
+         * @param string $alias
+         * @return void 
+         * @static 
+         */ 
+        public static function include($path, $alias = null)
+        {
+            \Illuminate\View\Compilers\BladeCompiler::include($path, $alias);
+        }
+        
+        /**
          * Register a handler for custom directives.
          *
          * @param string $name
@@ -2181,14 +2173,25 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Set the echo format to double encode entities.
+         * Set the "echo" format to double encode entities.
          *
          * @return void 
          * @static 
          */ 
-        public static function doubleEncode()
+        public static function withDoubleEncoding()
         {
-            \Illuminate\View\Compilers\BladeCompiler::doubleEncode();
+            \Illuminate\View\Compilers\BladeCompiler::withDoubleEncoding();
+        }
+        
+        /**
+         * Set the "echo" format to not double encode entities.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function withoutDoubleEncoding()
+        {
+            \Illuminate\View\Compilers\BladeCompiler::withoutDoubleEncoding();
         }
         
         /**
@@ -3138,14 +3141,14 @@ namespace Illuminate\Support\Facades {
          * @param int $minutes
          * @param string $path
          * @param string $domain
-         * @param bool $secure
+         * @param bool|null $secure
          * @param bool $httpOnly
          * @param bool $raw
          * @param string|null $sameSite
          * @return \Symfony\Component\HttpFoundation\Cookie 
          * @static 
          */ 
-        public static function make($name, $value, $minutes = 0, $path = null, $domain = null, $secure = false, $httpOnly = true, $raw = false, $sameSite = null)
+        public static function make($name, $value, $minutes = 0, $path = null, $domain = null, $secure = null, $httpOnly = true, $raw = false, $sameSite = null)
         {
             return \Illuminate\Cookie\CookieJar::make($name, $value, $minutes, $path, $domain, $secure, $httpOnly, $raw, $sameSite);
         }
@@ -3157,14 +3160,14 @@ namespace Illuminate\Support\Facades {
          * @param string $value
          * @param string $path
          * @param string $domain
-         * @param bool $secure
+         * @param bool|null $secure
          * @param bool $httpOnly
          * @param bool $raw
          * @param string|null $sameSite
          * @return \Symfony\Component\HttpFoundation\Cookie 
          * @static 
          */ 
-        public static function forever($name, $value, $path = null, $domain = null, $secure = false, $httpOnly = true, $raw = false, $sameSite = null)
+        public static function forever($name, $value, $path = null, $domain = null, $secure = null, $httpOnly = true, $raw = false, $sameSite = null)
         {
             return \Illuminate\Cookie\CookieJar::forever($name, $value, $path, $domain, $secure, $httpOnly, $raw, $sameSite);
         }
@@ -5131,17 +5134,50 @@ namespace Illuminate\Support\Facades {
     class Hash {
         
         /**
+         * Create an instance of the Bcrypt hash Driver.
+         *
+         * @return \Illuminate\Hashing\BcryptHasher 
+         * @static 
+         */ 
+        public static function createBcryptDriver()
+        {
+            return \Illuminate\Hashing\HashManager::createBcryptDriver();
+        }
+        
+        /**
+         * Create an instance of the Argon2 hash Driver.
+         *
+         * @return \Illuminate\Hashing\ArgonHasher 
+         * @static 
+         */ 
+        public static function createArgonDriver()
+        {
+            return \Illuminate\Hashing\HashManager::createArgonDriver();
+        }
+        
+        /**
+         * Get information about the given hashed value.
+         *
+         * @param string $hashedValue
+         * @return array 
+         * @static 
+         */ 
+        public static function info($hashedValue)
+        {
+            return \Illuminate\Hashing\HashManager::info($hashedValue);
+        }
+        
+        /**
          * Hash the given value.
          *
          * @param string $value
          * @param array $options
          * @return string 
-         * @throws \RuntimeException
          * @static 
          */ 
         public static function make($value, $options = array())
         {
-            return \Illuminate\Hashing\BcryptHasher::make($value, $options);
+            return \Illuminate\Hashing\HashManager::make($value, $options);
         }
         
         /**
@@ -5155,7 +5191,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function check($value, $hashedValue, $options = array())
         {
-            return \Illuminate\Hashing\BcryptHasher::check($value, $hashedValue, $options);
+            return \Illuminate\Hashing\HashManager::check($value, $hashedValue, $options);
         }
         
         /**
@@ -5168,19 +5204,57 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function needsRehash($hashedValue, $options = array())
         {
-            return \Illuminate\Hashing\BcryptHasher::needsRehash($hashedValue, $options);
+            return \Illuminate\Hashing\HashManager::needsRehash($hashedValue, $options);
         }
         
         /**
-         * Set the default password work factor.
+         * Get the default driver name.
          *
-         * @param int $rounds
+         * @return string 
+         * @static 
+         */ 
+        public static function getDefaultDriver()
+        {
+            return \Illuminate\Hashing\HashManager::getDefaultDriver();
+        }
+        
+        /**
+         * Get a driver instance.
+         *
+         * @param string $driver
+         * @return mixed 
+         * @static 
+         */ 
+        public static function driver($driver = null)
+        {
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Illuminate\Hashing\HashManager::driver($driver);
+        }
+        
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
          * @return $this 
          * @static 
          */ 
-        public static function setRounds($rounds)
+        public static function extend($driver, $callback)
         {
-            return \Illuminate\Hashing\BcryptHasher::setRounds($rounds);
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Illuminate\Hashing\HashManager::extend($driver, $callback);
+        }
+        
+        /**
+         * Get all of the created "drivers".
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getDrivers()
+        {
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Illuminate\Hashing\HashManager::getDrivers();
         }
          
     }
@@ -5444,6 +5518,18 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Set the loaded translation groups.
+         *
+         * @param array $loaded
+         * @return void 
+         * @static 
+         */ 
+        public static function setLoaded($loaded)
+        {
+            \Illuminate\Translation\Translator::setLoaded($loaded);
+        }
+        
+        /**
          * Set the parsed value of a key.
          *
          * @param string $key
@@ -5603,9 +5689,82 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Log a message to the logs.
+         * Create a new, on-demand aggregate logger instance.
          *
-         * @param string $level
+         * @param array $channels
+         * @param string|null $channel
+         * @return \Psr\Log\LoggerInterface 
+         * @static 
+         */ 
+        public static function stack($channels, $channel = null)
+        {
+            return \Illuminate\Log\LogManager::stack($channels, $channel);
+        }
+        
+        /**
+         * Get a log channel instance.
+         *
+         * @param string|null $channel
+         * @return mixed 
+         * @static 
+         */ 
+        public static function channel($channel = null)
+        {
+            return \Illuminate\Log\LogManager::channel($channel);
+        }
+        
+        /**
+         * Get a log driver instance.
+         *
+         * @param string|null $driver
+         * @return mixed 
+         * @static 
+         */ 
+        public static function driver($driver = null)
+        {
+            return \Illuminate\Log\LogManager::driver($driver);
+        }
+        
+        /**
+         * Get the default log driver name.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getDefaultDriver()
+        {
+            return \Illuminate\Log\LogManager::getDefaultDriver();
+        }
+        
+        /**
+         * Set the default log driver name.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */ 
+        public static function setDefaultDriver($name)
+        {
+            \Illuminate\Log\LogManager::setDefaultDriver($name);
+        }
+        
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return $this 
+         * @static 
+         */ 
+        public static function extend($driver, $callback)
+        {
+            return \Illuminate\Log\LogManager::extend($driver, $callback);
+        }
+        
+        /**
+         * Logs with an arbitrary level.
+         *
+         * @param mixed $level
          * @param string $message
          * @param array $context
          * @return void 
@@ -5613,122 +5772,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function log($level, $message, $context = array())
         {
-            \Illuminate\Log\Writer::log($level, $message, $context);
-        }
-        
-        /**
-         * Dynamically pass log calls into the writer.
-         *
-         * @param string $level
-         * @param string $message
-         * @param array $context
-         * @return void 
-         * @static 
-         */ 
-        public static function write($level, $message, $context = array())
-        {
-            \Illuminate\Log\Writer::write($level, $message, $context);
-        }
-        
-        /**
-         * Register a file log handler.
-         *
-         * @param string $path
-         * @param string $level
-         * @return void 
-         * @static 
-         */ 
-        public static function useFiles($path, $level = 'debug')
-        {
-            \Illuminate\Log\Writer::useFiles($path, $level);
-        }
-        
-        /**
-         * Register a daily file log handler.
-         *
-         * @param string $path
-         * @param int $days
-         * @param string $level
-         * @return void 
-         * @static 
-         */ 
-        public static function useDailyFiles($path, $days = 0, $level = 'debug')
-        {
-            \Illuminate\Log\Writer::useDailyFiles($path, $days, $level);
-        }
-        
-        /**
-         * Register a Syslog handler.
-         *
-         * @param string $name
-         * @param string $level
-         * @param mixed $facility
-         * @return \Psr\Log\LoggerInterface 
-         * @static 
-         */ 
-        public static function useSyslog($name = 'laravel', $level = 'debug', $facility = 8)
-        {
-            return \Illuminate\Log\Writer::useSyslog($name, $level, $facility);
-        }
-        
-        /**
-         * Register an error_log handler.
-         *
-         * @param string $level
-         * @param int $messageType
-         * @return void 
-         * @static 
-         */ 
-        public static function useErrorLog($level = 'debug', $messageType = 0)
-        {
-            \Illuminate\Log\Writer::useErrorLog($level, $messageType);
-        }
-        
-        /**
-         * Register a new callback handler for when a log event is triggered.
-         *
-         * @param \Closure $callback
-         * @return void 
-         * @throws \RuntimeException
-         * @static 
-         */ 
-        public static function listen($callback)
-        {
-            \Illuminate\Log\Writer::listen($callback);
-        }
-        
-        /**
-         * Get the underlying Monolog instance.
-         *
-         * @return \Monolog\Logger 
-         * @static 
-         */ 
-        public static function getMonolog()
-        {
-            return \Illuminate\Log\Writer::getMonolog();
-        }
-        
-        /**
-         * Get the event dispatcher instance.
-         *
-         * @return \Illuminate\Contracts\Events\Dispatcher 
-         * @static 
-         */ 
-        public static function getEventDispatcher()
-        {
-            return \Illuminate\Log\Writer::getEventDispatcher();
-        }
-        
-        /**
-         * Set the event dispatcher instance.
-         *
-         * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
-         * @return void 
-         * @static 
-         */ 
-        public static function setEventDispatcher($dispatcher)
-        {
-            \Illuminate\Log\Writer::setEventDispatcher($dispatcher);
+            \Illuminate\Log\LogManager::log($level, $message, $context);
         }
          
     }
@@ -5796,6 +5840,19 @@ namespace Illuminate\Support\Facades {
         public static function bcc($users)
         {
             return \Illuminate\Mail\Mailer::bcc($users);
+        }
+        
+        /**
+         * Send a new message with only an HTML part.
+         *
+         * @param string $html
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function html($html, $callback)
+        {
+            \Illuminate\Mail\Mailer::html($html, $callback);
         }
         
         /**
@@ -6981,6 +7038,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Create a new request instance from the given Laravel request.
+         *
+         * @param \Illuminate\Http\Request $from
+         * @param \Illuminate\Http\Request|null $to
+         * @return static 
+         * @static 
+         */ 
+        public static function createFrom($from, $to = null)
+        {
+            return \Illuminate\Http\Request::createFrom($from, $to);
+        }
+        
+        /**
          * Create an Illuminate request from a Symfony instance.
          *
          * @param \Symfony\Component\HttpFoundation\Request $request
@@ -7019,6 +7089,17 @@ namespace Illuminate\Support\Facades {
         public static function session()
         {
             return \Illuminate\Http\Request::session();
+        }
+        
+        /**
+         * Get the session associated with the request.
+         *
+         * @return \Illuminate\Session\Store|null 
+         * @static 
+         */ 
+        public static function getSession()
+        {
+            return \Illuminate\Http\Request::getSession();
         }
         
         /**
@@ -7281,10 +7362,10 @@ namespace Illuminate\Support\Facades {
          * @throws \InvalidArgumentException When $trustedHeaderSet is invalid
          * @static 
          */ 
-        public static function setTrustedProxies($proxies)
+        public static function setTrustedProxies($proxies, $trustedHeaderSet)
         {
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::setTrustedProxies($proxies);
+            return \Illuminate\Http\Request::setTrustedProxies($proxies, $trustedHeaderSet);
         }
         
         /**
@@ -7335,46 +7416,6 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
             return \Illuminate\Http\Request::getTrustedHosts();
-        }
-        
-        /**
-         * Sets the name for trusted headers.
-         * 
-         * The following header keys are supported:
-         * 
-         *  * Request::HEADER_CLIENT_IP:    defaults to X-Forwarded-For   (see getClientIp())
-         *  * Request::HEADER_CLIENT_HOST:  defaults to X-Forwarded-Host  (see getHost())
-         *  * Request::HEADER_CLIENT_PORT:  defaults to X-Forwarded-Port  (see getPort())
-         *  * Request::HEADER_CLIENT_PROTO: defaults to X-Forwarded-Proto (see getScheme() and isSecure())
-         *  * Request::HEADER_FORWARDED:    defaults to Forwarded         (see RFC 7239)
-         * 
-         * Setting an empty value allows to disable the trusted header for the given key.
-         *
-         * @param string $key The header key
-         * @param string $value The header name
-         * @throws \InvalidArgumentException
-         * @deprecated since version 3.3, to be removed in 4.0. Use the $trustedHeaderSet argument of the Request::setTrustedProxies() method instead.
-         * @static 
-         */ 
-        public static function setTrustedHeaderName($key, $value)
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::setTrustedHeaderName($key, $value);
-        }
-        
-        /**
-         * Gets the trusted proxy header name.
-         *
-         * @param string $key The header key
-         * @return string The header name
-         * @throws \InvalidArgumentException
-         * @deprecated since version 3.3, to be removed in 4.0. Use the Request::getTrustedHeaderSet() method instead.
-         * @static 
-         */ 
-        public static function getTrustedHeaderName($key)
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::getTrustedHeaderName($key);
         }
         
         /**
@@ -7445,18 +7486,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Gets the Session.
-         *
-         * @return \Symfony\Component\HttpFoundation\SessionInterface|null The session
-         * @static 
-         */ 
-        public static function getSession()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::getSession();
-        }
-        
-        /**
          * Whether the request contains a Session which was started in one of the
          * previous requests.
          *
@@ -7524,10 +7553,6 @@ namespace Illuminate\Support\Facades {
          * header value is a comma+space separated list of IP addresses, the left-most
          * being the original client, and each successive proxy that passed the request
          * adding the IP address where it received the request from.
-         * 
-         * If your reverse proxy uses a different header name than "X-Forwarded-For",
-         * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
-         * argument of the Request::setTrustedProxies() method instead.
          *
          * @return string|null The client IP address
          * @see getClientIps()
@@ -7628,10 +7653,6 @@ namespace Illuminate\Support\Facades {
          * when trusted proxies were set via "setTrustedProxies()".
          * 
          * The "X-Forwarded-Port" header must contain the client port.
-         * 
-         * If your reverse proxy uses a different header name than "X-Forwarded-Port",
-         * configure it via via the $trustedHeaderSet argument of the
-         * Request::setTrustedProxies() method instead.
          *
          * @return int|string can be a string if fetched from the server bag
          * @static 
@@ -7792,10 +7813,6 @@ namespace Illuminate\Support\Facades {
          * when trusted proxies were set via "setTrustedProxies()".
          * 
          * The "X-Forwarded-Proto" header must contain the protocol: "https" or "http".
-         * 
-         * If your reverse proxy uses a different header name than "X-Forwarded-Proto"
-         * ("SSL_HTTPS" for instance), configure it via the $trustedHeaderSet
-         * argument of the Request::setTrustedProxies() method instead.
          *
          * @return bool 
          * @static 
@@ -7813,10 +7830,6 @@ namespace Illuminate\Support\Facades {
          * when trusted proxies were set via "setTrustedProxies()".
          * 
          * The "X-Forwarded-Host" header must contain the client host name.
-         * 
-         * If your reverse proxy uses a different header name than "X-Forwarded-Host",
-         * configure it via the $trustedHeaderSet argument of the
-         * Request::setTrustedProxies() method instead.
          *
          * @return string 
          * @throws SuspiciousOperationException when the host name is invalid or not trusted
@@ -8253,7 +8266,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Determine if the current request is asking for JSON in return.
+         * Determine if the current request is asking for JSON.
          *
          * @return bool 
          * @static 
@@ -8285,6 +8298,17 @@ namespace Illuminate\Support\Facades {
         public static function prefers($contentTypes)
         {
             return \Illuminate\Http\Request::prefers($contentTypes);
+        }
+        
+        /**
+         * Determine if the current request accepts any content type.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function acceptsAnyContentType()
+        {
+            return \Illuminate\Http\Request::acceptsAnyContentType();
         }
         
         /**
@@ -8456,11 +8480,11 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the request contains any of the given inputs.
          *
-         * @param mixed $key
+         * @param string|array $key
          * @return bool 
          * @static 
          */ 
-        public static function hasAny($keys = null)
+        public static function hasAny($keys)
         {
             return \Illuminate\Http\Request::hasAny($keys);
         }
@@ -8503,9 +8527,9 @@ namespace Illuminate\Support\Facades {
         /**
          * Retrieve an input item from the request.
          *
-         * @param string $key
+         * @param string|null $key
          * @param string|array|null $default
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function input($key = null, $default = null)
@@ -8750,10 +8774,25 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Return a new streamed response as a file download from the application.
+         *
+         * @param \Closure $callback
+         * @param string|null $name
+         * @param array $headers
+         * @param string|null $disposition
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
+         * @static 
+         */ 
+        public static function streamDownload($callback, $name = null, $headers = array(), $disposition = 'attachment')
+        {
+            return \Illuminate\Routing\ResponseFactory::streamDownload($callback, $name, $headers, $disposition);
+        }
+        
+        /**
          * Create a new file download response.
          *
          * @param \SplFileInfo|string $file
-         * @param string $name
+         * @param string|null $name
          * @param array $headers
          * @param string|null $disposition
          * @return \Symfony\Component\HttpFoundation\BinaryFileResponse 
@@ -10525,6 +10564,18 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Create an instance of the sftp driver.
+         *
+         * @param array $config
+         * @return \Illuminate\Filesystem\FilesystemAdapter 
+         * @static 
+         */ 
+        public static function createSftpDriver($config)
+        {
+            return \Illuminate\Filesystem\FilesystemManager::createSftpDriver($config);
+        }
+        
+        /**
          * Create an instance of the Amazon S3 driver.
          *
          * @param array $config
@@ -12279,61 +12330,248 @@ namespace Illuminate\Support\Facades {
  
 }
 
+namespace Kris\LaravelFormBuilder\Facades { 
+
+    class FormBuilder {
+        
+        /**
+         * Create a Form instance.
+         *
+         * @param string $formClass The name of the class that inherits \Kris\LaravelFormBuilder\Form.
+         * @param array $options|null
+         * @param array $data|null
+         * @return \Form 
+         * @static 
+         */ 
+        public static function create($formClass, $options = array(), $data = array())
+        {
+            return \Kris\LaravelFormBuilder\FormBuilder::create($formClass, $options, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @param $items
+         * @param array $options
+         * @param array $data
+         * @return mixed 
+         * @static 
+         */ 
+        public static function createByArray($items, $options = array(), $data = array())
+        {
+            return \Kris\LaravelFormBuilder\FormBuilder::createByArray($items, $options, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @param $form
+         * @param $items
+         * @static 
+         */ 
+        public static function buildFormByArray($form, $items)
+        {
+            return \Kris\LaravelFormBuilder\FormBuilder::buildFormByArray($form, $items);
+        }
+        
+        /**
+         * Get instance of the empty form which can be modified
+         * Get the plain form class.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getFormClass()
+        {
+            return \Kris\LaravelFormBuilder\FormBuilder::getFormClass();
+        }
+        
+        /**
+         * Set the plain form class.
+         *
+         * @param string $class
+         * @static 
+         */ 
+        public static function setFormClass($class)
+        {
+            return \Kris\LaravelFormBuilder\FormBuilder::setFormClass($class);
+        }
+        
+        /**
+         * Get instance of the empty form which can be modified.
+         *
+         * @param array $options
+         * @param array $data
+         * @return \Kris\LaravelFormBuilder\Form 
+         * @static 
+         */ 
+        public static function plain($options = array(), $data = array())
+        {
+            return \Kris\LaravelFormBuilder\FormBuilder::plain($options, $data);
+        }
+        
+        /**
+         * Set depedencies and options on existing form instance
+         *
+         * @param \Kris\LaravelFormBuilder\Form $instance
+         * @param array $options
+         * @param array $data
+         * @return \Kris\LaravelFormBuilder\Form 
+         * @static 
+         */ 
+        public static function setDependenciesAndOptions($instance, $options = array(), $data = array())
+        {
+            return \Kris\LaravelFormBuilder\FormBuilder::setDependenciesAndOptions($instance, $options, $data);
+        }
+         
+    }
+ 
+}
+
 namespace Bootstrapper\Facades { 
 
-    class Accordion {
+    class Table {
         
         /**
-         * Name the accordion
+         * Renders the table
          *
-         * @param $name The name of the accordion
-         * @return $this 
+         * @return string 
          * @static 
          */ 
-        public static function named($name)
+        public static function render()
         {
-            return \Bootstrapper\Accordion::named($name);
+            return \Bootstrapper\Table::render();
         }
         
         /**
-         * Add the contents for the accordion. Should be an array of arrays
-         * <strong>Expected Keys</strong>:
-         * <ul>
-         * <li>title</li>
-         * <li>contents</li>
-         * <li>attributes (optional)</li>
-         * </ul>
+         * Sets the table to be striped
          *
-         * @param array $contents
+         * @return $this 
+         * @static 
+         */ 
+        public static function striped()
+        {
+            return \Bootstrapper\Table::striped();
+        }
+        
+        /**
+         * Sets the table to be bordered
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function bordered()
+        {
+            return \Bootstrapper\Table::bordered();
+        }
+        
+        /**
+         * Sets the table to have an active hover state
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function hover()
+        {
+            return \Bootstrapper\Table::hover();
+        }
+        
+        /**
+         * Sets the table to be condensed
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function condensed()
+        {
+            return \Bootstrapper\Table::condensed();
+        }
+        
+        /**
+         * Sets the contents of the table
+         *
+         * @param array|\Bootstrapper\Traversable $contents The contents of the table. We expect
+         *                                    either an array of arrays or an
+         *                                    array of eloquent models
          * @return $this 
          * @static 
          */ 
         public static function withContents($contents)
         {
-            return \Bootstrapper\Accordion::withContents($contents);
+            return \Bootstrapper\Table::withContents($contents);
         }
         
         /**
-         * Sets which panel should be opened. Numbering begins from 0.
+         * Creates a list of columns to ignore
          *
-         * @param $integer int
+         * @param array $ignores The ignored columns
          * @return $this 
          * @static 
          */ 
-        public static function open($integer)
+        public static function ignore($ignores)
         {
-            return \Bootstrapper\Accordion::open($integer);
+            return \Bootstrapper\Table::ignore($ignores);
         }
         
         /**
-         * Renders the accordion
+         * Adds a callback
          *
-         * @return string 
+         * @param string $index The column name for the callback
+         * @param callable $function The callback function,
+         *                           which should be of the form
+         *                           function($column, $row).
+         * @return $this 
          * @static 
          */ 
-        public static function render()
+        public static function callback($index, $function)
         {
-            return \Bootstrapper\Accordion::render();
+            return \Bootstrapper\Table::callback($index, $function);
+        }
+        
+        /**
+         * Sets which columns we can return
+         *
+         * @param array $only
+         * @return $this 
+         * @static 
+         */ 
+        public static function only($only)
+        {
+            return \Bootstrapper\Table::only($only);
+        }
+        
+        /**
+         * Sets content to be rendered in to the table footer
+         *
+         * @param string $footer
+         * @return $this 
+         * @static 
+         */ 
+        public static function withFooter($footer)
+        {
+            return \Bootstrapper\Table::withFooter($footer);
+        }
+        
+        /**
+         * Uses given class(es) on body TDs.
+         *
+         * @param mixed $classes The class(es) to apply.
+         * @return $this 
+         * @static 
+         */ 
+        public static function withBodyCellClass($classes)
+        {
+            return \Bootstrapper\Table::withBodyCellClass($classes);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function withClassOnCellsInColumn($columns, $classes)
+        {
+            return \Bootstrapper\Table::withClassOnCellsInColumn($columns, $classes);
         }
         
         /**
@@ -12346,7 +12584,7 @@ namespace Bootstrapper\Facades {
         public static function withAttributes($attributes)
         {
             //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Accordion::withAttributes($attributes);
+            return \Bootstrapper\Table::withAttributes($attributes);
         }
         
         /**
@@ -12359,242 +12597,7 @@ namespace Bootstrapper\Facades {
         public static function addClass($classes)
         {
             //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Accordion::addClass($classes);
-        }
-         
-    }
-
-    class Alert {
-        
-        /**
-         * Sets the type of the alert. The alert prefix is not assumed.
-         *
-         * @param $type string
-         * @return $this 
-         * @static 
-         */ 
-        public static function setType($type)
-        {
-            return \Bootstrapper\Alert::setType($type);
-        }
-        
-        /**
-         * Renders the alert
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Alert::render();
-        }
-        
-        /**
-         * Creates an info alert box
-         *
-         * @param string $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function info($contents = '')
-        {
-            return \Bootstrapper\Alert::info($contents);
-        }
-        
-        /**
-         * Creates a success alert box
-         *
-         * @param string $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function success($contents = '')
-        {
-            return \Bootstrapper\Alert::success($contents);
-        }
-        
-        /**
-         * Creates a warning alert box
-         *
-         * @param string $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function warning($contents = '')
-        {
-            return \Bootstrapper\Alert::warning($contents);
-        }
-        
-        /**
-         * Creates a danger alert box
-         *
-         * @param string $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function danger($contents = '')
-        {
-            return \Bootstrapper\Alert::danger($contents);
-        }
-        
-        /**
-         * Sets the contents of the alert box
-         *
-         * @param $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\Alert::withContents($contents);
-        }
-        
-        /**
-         * Adds a close button with the given text
-         *
-         * @param string $closer
-         * @return $this 
-         * @static 
-         */ 
-        public static function close($closer = '&times;')
-        {
-            return \Bootstrapper\Alert::close($closer);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Alert::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Alert::addClass($classes);
-        }
-         
-    }
-
-    class Badge {
-        
-        /**
-         * Renders the badge
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Badge::render();
-        }
-        
-        /**
-         * Adds contents to the badge
-         *
-         * @param $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\Badge::withContents($contents);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Badge::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Badge::addClass($classes);
-        }
-         
-    }
-
-    class Breadcrumb {
-        
-        /**
-         * Renders the breadcrumb
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Breadcrumb::render();
-        }
-        
-        /**
-         * Set the links for the breadcrumbs. Expects an array of the following:
-         * <ul>
-         * <li>An array, with keys <code>link</code> and <code>text</code></li>
-         * <li>A string for the active link
-         * </ul>
-         *
-         * @param $links array
-         * @return $this 
-         * @static 
-         */ 
-        public static function withLinks($links)
-        {
-            return \Bootstrapper\Breadcrumb::withLinks($links);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Breadcrumb::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Breadcrumb::addClass($classes);
+            return \Bootstrapper\Table::addClass($classes);
         }
          
     }
@@ -12939,532 +12942,6 @@ namespace Bootstrapper\Facades {
          
     }
 
-    class ButtonGroup {
-        
-        /**
-         * Renders the button group
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\ButtonGroup::render();
-        }
-        
-        /**
-         * Sets the size of the button group
-         *
-         * @param $size
-         * @static 
-         */ 
-        public static function setSize($size)
-        {
-            return \Bootstrapper\ButtonGroup::setSize($size);
-        }
-        
-        /**
-         * Sets the button group to be large
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function large()
-        {
-            return \Bootstrapper\ButtonGroup::large();
-        }
-        
-        /**
-         * Sets the button group to be small
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function small()
-        {
-            return \Bootstrapper\ButtonGroup::small();
-        }
-        
-        /**
-         * Sets the button group to be extra small
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function extraSmall()
-        {
-            return \Bootstrapper\ButtonGroup::extraSmall();
-        }
-        
-        /**
-         * Sets the button group to be radio
-         *
-         * @param array $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function radio($contents)
-        {
-            return \Bootstrapper\ButtonGroup::radio($contents);
-        }
-        
-        /**
-         * Sets the button group to be a checkbox
-         *
-         * @param array $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function checkbox($contents)
-        {
-            return \Bootstrapper\ButtonGroup::checkbox($contents);
-        }
-        
-        /**
-         * Sets the contents of the button group
-         *
-         * @param array $contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\ButtonGroup::withContents($contents);
-        }
-        
-        /**
-         * Sets the button group to be vertical
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function vertical()
-        {
-            return \Bootstrapper\ButtonGroup::vertical();
-        }
-        
-        /**
-         * Sets the type of the button group
-         *
-         * @param $type
-         * @return $this 
-         * @static 
-         */ 
-        public static function asType($type)
-        {
-            return \Bootstrapper\ButtonGroup::asType($type);
-        }
-        
-        /**
-         * Renders the contents of the button group
-         *
-         * @return string 
-         * @throws ButtonGroupException if a string should be activated
-         * @static 
-         */ 
-        public static function renderContents()
-        {
-            return \Bootstrapper\ButtonGroup::renderContents();
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function links($contents = array())
-        {
-            return \Bootstrapper\ButtonGroup::links($contents);
-        }
-        
-        /**
-         * Sets a link to be activated
-         *
-         * @param $toActivate
-         * @return $this 
-         * @static 
-         */ 
-        public static function activate($toActivate)
-        {
-            return \Bootstrapper\ButtonGroup::activate($toActivate);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\ButtonGroup::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\ButtonGroup::addClass($classes);
-        }
-         
-    }
-
-    class Carousel {
-        
-        /**
-         * Names the carousel
-         *
-         * @param string $name The name of the carousel
-         * @return $this 
-         * @static 
-         */ 
-        public static function named($name)
-        {
-            return \Bootstrapper\Carousel::named($name);
-        }
-        
-        /**
-         * Set the control icons or text
-         *
-         * @param string $previousButton Left arrorw, previous text
-         * @param string $nextButton right arrow, next string
-         * @return \Bootstrapper\this 
-         * @static 
-         */ 
-        public static function withControls($previousButton, $nextButton)
-        {
-            return \Bootstrapper\Carousel::withControls($previousButton, $nextButton);
-        }
-        
-        /**
-         * Sets the contents of the carousel
-         *
-         * @param array $contents The new contents. Should be an array of arrays,
-         *                        with the inner keys being "image", "alt" and
-         *                        (optionally) "caption"
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\Carousel::withContents($contents);
-        }
-        
-        /**
-         * Renders the carousel
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Carousel::render();
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Carousel::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Carousel::addClass($classes);
-        }
-         
-    }
-
-    class DropdownButton {
-        
-        /**
-         * Set the label of the button
-         *
-         * @param $label
-         * @return $this 
-         * @static 
-         */ 
-        public static function labelled($label)
-        {
-            return \Bootstrapper\DropdownButton::labelled($label);
-        }
-        
-        /**
-         * Set the contents of the button
-         *
-         * @param array $contents The contents of the dropdown button
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\DropdownButton::withContents($contents);
-        }
-        
-        /**
-         * Sets the type of the button
-         *
-         * @param string $type The type of the button
-         * @return $this 
-         * @static 
-         */ 
-        public static function setType($type)
-        {
-            return \Bootstrapper\DropdownButton::setType($type);
-        }
-        
-        /**
-         * Sets the size of the button
-         *
-         * @param string $size The size of the button
-         * @return $this 
-         * @static 
-         */ 
-        public static function setSize($size)
-        {
-            return \Bootstrapper\DropdownButton::setSize($size);
-        }
-        
-        /**
-         * Splits the button
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function split()
-        {
-            return \Bootstrapper\DropdownButton::split();
-        }
-        
-        /**
-         * Sets the button to drop up
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function dropup()
-        {
-            return \Bootstrapper\DropdownButton::dropup();
-        }
-        
-        /**
-         * Creates a normal dropdown button
-         *
-         * @param string $label The label
-         * @return $this 
-         * @static 
-         */ 
-        public static function normal($label = '')
-        {
-            return \Bootstrapper\DropdownButton::normal($label);
-        }
-        
-        /**
-         * Creates a primary dropdown button
-         *
-         * @param string $label The label
-         * @return $this 
-         * @static 
-         */ 
-        public static function primary($label = '')
-        {
-            return \Bootstrapper\DropdownButton::primary($label);
-        }
-        
-        /**
-         * Creates a danger dropdown button
-         *
-         * @param string $label The label
-         * @return $this 
-         * @static 
-         */ 
-        public static function danger($label = '')
-        {
-            return \Bootstrapper\DropdownButton::danger($label);
-        }
-        
-        /**
-         * Creates a warning dropdown button
-         *
-         * @param string $label The label
-         * @return $this 
-         * @static 
-         */ 
-        public static function warning($label = '')
-        {
-            return \Bootstrapper\DropdownButton::warning($label);
-        }
-        
-        /**
-         * Creates a success dropdown button
-         *
-         * @param string $label The label
-         * @return $this 
-         * @static 
-         */ 
-        public static function success($label = '')
-        {
-            return \Bootstrapper\DropdownButton::success($label);
-        }
-        
-        /**
-         * Creates a info dropdown button
-         *
-         * @param string $label The label
-         * @return $this 
-         * @static 
-         */ 
-        public static function info($label = '')
-        {
-            return \Bootstrapper\DropdownButton::info($label);
-        }
-        
-        /**
-         * Sets the size to large
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function large()
-        {
-            return \Bootstrapper\DropdownButton::large();
-        }
-        
-        /**
-         * Sets the size to small
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function small()
-        {
-            return \Bootstrapper\DropdownButton::small();
-        }
-        
-        /**
-         * Sets the size to extra small
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function extraSmall()
-        {
-            return \Bootstrapper\DropdownButton::extraSmall();
-        }
-        
-        /**
-         * Renders the dropdown button
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\DropdownButton::render();
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\DropdownButton::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\DropdownButton::addClass($classes);
-        }
-         
-    }
-
-    class Helpers {
-        
-        /**
-         * Slugifies a string
-         *
-         * @param string $string
-         * @return mixed 
-         * @static 
-         */ 
-        public static function slug($string)
-        {
-            return \Bootstrapper\Helpers::slug($string);
-        }
-        
-        /**
-         * Outputs a link to the Bootstrap CDN
-         *
-         * @param bool $withTheme Gets the bootstrap theme as well
-         * @return string 
-         * @static 
-         */ 
-        public static function css($withTheme = true)
-        {
-            return \Bootstrapper\Helpers::css($withTheme);
-        }
-        
-        /**
-         * Outputs a link to the Jquery and Bootstrap CDN
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function js()
-        {
-            return \Bootstrapper\Helpers::js();
-        }
-        
-        /**
-         * Generate an id of the form "x-class-name-x". These should always be
-         * unique.
-         *
-         * @param \Bootstrapper\RenderedObject $caller The object that called this
-         * @return string A unique id
-         * @static 
-         */ 
-        public static function generateId($caller)
-        {
-            return \Bootstrapper\Helpers::generateId($caller);
-        }
-         
-    }
-
     class Icon {
         
         /**
@@ -13515,580 +12992,6 @@ namespace Bootstrapper\Facades {
         {
             //Method inherited from \Bootstrapper\RenderedObject            
             return \Bootstrapper\Icon::addClass($classes);
-        }
-         
-    }
-
-    class InputGroup {
-        
-        /**
-         * Renders the input group
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\InputGroup::render();
-        }
-        
-        /**
-         * Sets the contents of the input group
-         *
-         * @param string $contents The new contents
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\InputGroup::withContents($contents);
-        }
-        
-        /**
-         * Sets the size of the input group
-         *
-         * @param string $size The new size
-         * @return $this 
-         * @static 
-         */ 
-        public static function setSize($size)
-        {
-            return \Bootstrapper\InputGroup::setSize($size);
-        }
-        
-        /**
-         * Prepends something to the input
-         *
-         * @param string $prepend The value to prepend
-         * @param bool $isButton Whether the value is a button
-         * @return $this 
-         * @static 
-         */ 
-        public static function prepend($prepend, $isButton = false)
-        {
-            return \Bootstrapper\InputGroup::prepend($prepend, $isButton);
-        }
-        
-        /**
-         * Prepend a button
-         *
-         * @param string $button The button to prepend
-         * @return $this 
-         * @static 
-         */ 
-        public static function prependButton($button)
-        {
-            return \Bootstrapper\InputGroup::prependButton($button);
-        }
-        
-        /**
-         * Appends something to the input
-         *
-         * @param string $append The value to append
-         * @param bool $isButton Whether the value is a button
-         * @return $this 
-         * @static 
-         */ 
-        public static function append($append, $isButton = false)
-        {
-            return \Bootstrapper\InputGroup::append($append, $isButton);
-        }
-        
-        /**
-         * Append a button
-         *
-         * @param string $button The button to append
-         * @return $this 
-         * @static 
-         */ 
-        public static function appendButton($button)
-        {
-            return \Bootstrapper\InputGroup::appendButton($button);
-        }
-        
-        /**
-         * Makes the input group large
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function large()
-        {
-            return \Bootstrapper\InputGroup::large();
-        }
-        
-        /**
-         * Makes the input group small
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function small()
-        {
-            return \Bootstrapper\InputGroup::small();
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\InputGroup::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\InputGroup::addClass($classes);
-        }
-         
-    }
-
-    class Image {
-        
-        /**
-         * Renders the image
-         *
-         * @return string 
-         * @throws ImageException If the image source is not set
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Image::render();
-        }
-        
-        /**
-         * Sets the source of the image
-         *
-         * @param string $source The source of the image
-         * @return $this 
-         * @static 
-         */ 
-        public static function withSource($source)
-        {
-            return \Bootstrapper\Image::withSource($source);
-        }
-        
-        /**
-         * Sets the alt text of the image
-         *
-         * @param string $alt The alt text of the image
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAlt($alt)
-        {
-            return \Bootstrapper\Image::withAlt($alt);
-        }
-        
-        /**
-         * Sets the image to be responsive
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function responsive()
-        {
-            return \Bootstrapper\Image::responsive();
-        }
-        
-        /**
-         * Creates a rounded image
-         *
-         * @param null|string $src The source of the image. Pass null to use the
-         *                         previous value of the source
-         * @param null|string $alt The alt text of the image. Pass null to use
-         *                         the previous value
-         * @return $this 
-         * @static 
-         */ 
-        public static function rounded($src = null, $alt = null)
-        {
-            return \Bootstrapper\Image::rounded($src, $alt);
-        }
-        
-        /**
-         * Creates a circle image
-         *
-         * @param null|string $src The source of the image. Pass null to use the
-         *                         previous value of the source
-         * @param null|string $alt The alt text of the image. Pass null to use
-         *                         the previous value
-         * @return $this 
-         * @static 
-         */ 
-        public static function circle($src = null, $alt = null)
-        {
-            return \Bootstrapper\Image::circle($src, $alt);
-        }
-        
-        /**
-         * Creates a thumbnail image
-         *
-         * @param null|string $src The source of the image. Pass null to use the
-         *                         previous value of the source
-         * @param null|string $alt The alt text of the image. Pass null to use
-         *                         the previous value
-         * @return $this 
-         * @static 
-         */ 
-        public static function thumbnail($src = null, $alt = null)
-        {
-            return \Bootstrapper\Image::thumbnail($src, $alt);
-        }
-        
-        /**
-         * BC version of Image::addClass()
-         *
-         * @param string|array $class
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($class)
-        {
-            return \Bootstrapper\Image::addClass($class);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Image::withAttributes($attributes);
-        }
-         
-    }
-
-    class Label {
-        
-        /**
-         * Renders the label
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Label::render();
-        }
-        
-        /**
-         * Sets the contents of the label
-         *
-         * @param string $contents The new contents of the label
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\Label::withContents($contents);
-        }
-        
-        /**
-         * Sets the type of the label. Assumes that the label- prefix is already set
-         *
-         * @param string $type The new type
-         * @return $this 
-         * @static 
-         */ 
-        public static function setType($type)
-        {
-            return \Bootstrapper\Label::setType($type);
-        }
-        
-        /**
-         * Creates a primary label
-         *
-         * @param string $contents The contents of the label
-         * @return $this 
-         * @static 
-         */ 
-        public static function primary($contents = '')
-        {
-            return \Bootstrapper\Label::primary($contents);
-        }
-        
-        /**
-         * Creates a success label
-         *
-         * @param string $contents The contents of the label
-         * @return $this 
-         * @static 
-         */ 
-        public static function success($contents = '')
-        {
-            return \Bootstrapper\Label::success($contents);
-        }
-        
-        /**
-         * Creates an info label
-         *
-         * @param string $contents The contents of the label
-         * @return $this 
-         * @static 
-         */ 
-        public static function info($contents = '')
-        {
-            return \Bootstrapper\Label::info($contents);
-        }
-        
-        /**
-         * Creates a warning label
-         *
-         * @param string $contents The contents of the label
-         * @return $this 
-         * @static 
-         */ 
-        public static function warning($contents = '')
-        {
-            return \Bootstrapper\Label::warning($contents);
-        }
-        
-        /**
-         * Creates a danger label
-         *
-         * @param string $contents The contents of the label
-         * @return $this 
-         * @static 
-         */ 
-        public static function danger($contents = '')
-        {
-            return \Bootstrapper\Label::danger($contents);
-        }
-        
-        /**
-         * Creates a label
-         *
-         * @param string $contents The contents of the label
-         * @param string $type The type to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function create($contents, $type = 'label-default')
-        {
-            return \Bootstrapper\Label::create($contents, $type);
-        }
-        
-        /**
-         * Creates a normal label
-         *
-         * @param string $contents The contents of the label
-         * @return $this 
-         * @static 
-         */ 
-        public static function normal($contents = '')
-        {
-            return \Bootstrapper\Label::normal($contents);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Label::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Label::addClass($classes);
-        }
-         
-    }
-
-    class MediaObject {
-        
-        /**
-         * Renders the media object
-         *
-         * @return string 
-         * @throws MediaObjectException if there is no contents
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\MediaObject::render();
-        }
-        
-        /**
-         * Sets the contents of the media object
-         *
-         * @param array $contents The contents of the media object
-         * @return $this 
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\MediaObject::withContents($contents);
-        }
-        
-        /**
-         * Force the media object to become a list
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function asList()
-        {
-            return \Bootstrapper\MediaObject::asList();
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\MediaObject::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\MediaObject::addClass($classes);
-        }
-         
-    }
-
-    class Modal {
-        
-        /**
-         * Renders the modal
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Modal::render();
-        }
-        
-        /**
-         * Sets the title of the modal
-         *
-         * @param string $title
-         * @return $this 
-         * @static 
-         */ 
-        public static function withTitle($title)
-        {
-            return \Bootstrapper\Modal::withTitle($title);
-        }
-        
-        /**
-         * Sets the body of the modal
-         *
-         * @param string $body The new body of the modal
-         * @return $this 
-         * @static 
-         */ 
-        public static function withBody($body)
-        {
-            return \Bootstrapper\Modal::withBody($body);
-        }
-        
-        /**
-         * Set the footer of the modal
-         *
-         * @param string $footer The footer
-         * @return $this 
-         * @static 
-         */ 
-        public static function withFooter($footer)
-        {
-            return \Bootstrapper\Modal::withFooter($footer);
-        }
-        
-        /**
-         * Sets the name of the modal
-         *
-         * @param string $name The name of the modal
-         * @return $this 
-         * @static 
-         */ 
-        public static function named($name)
-        {
-            return \Bootstrapper\Modal::named($name);
-        }
-        
-        /**
-         * Sets the button
-         *
-         * @param \Button $button The button to open the modal with
-         * @return $this 
-         * @static 
-         */ 
-        public static function withButton($button = null)
-        {
-            return \Bootstrapper\Modal::withButton($button);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Modal::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Modal::addClass($classes);
         }
          
     }
@@ -14423,593 +13326,101 @@ namespace Bootstrapper\Facades {
          
     }
 
-    class Panel {
+    class Alert {
         
         /**
-         * Renders the panel
+         * Sets the type of the alert. The alert prefix is not assumed.
          *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Panel::render();
-        }
-        
-        /**
-         * Creates a primary panel
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function primary()
-        {
-            return \Bootstrapper\Panel::primary();
-        }
-        
-        /**
-         * Creates a success panel
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function success()
-        {
-            return \Bootstrapper\Panel::success();
-        }
-        
-        /**
-         * Creates an info panel
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function info()
-        {
-            return \Bootstrapper\Panel::info();
-        }
-        
-        /**
-         * Creates an warning panel
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function warning()
-        {
-            return \Bootstrapper\Panel::warning();
-        }
-        
-        /**
-         * Creates an danger panel
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function danger()
-        {
-            return \Bootstrapper\Panel::danger();
-        }
-        
-        /**
-         * Sets the type of the panel
-         *
-         * @param string $type The new type. Assume the panel- prefix
+         * @param $type string
          * @return $this 
          * @static 
          */ 
         public static function setType($type)
         {
-            return \Bootstrapper\Panel::setType($type);
+            return \Bootstrapper\Alert::setType($type);
         }
         
         /**
-         * Sets the header of the panel
-         *
-         * @param string $header The header
-         * @return $this 
-         * @static 
-         */ 
-        public static function withHeader($header)
-        {
-            return \Bootstrapper\Panel::withHeader($header);
-        }
-        
-        /**
-         * Sets the body of the panel
-         *
-         * @param string $body The body
-         * @return $this 
-         * @static 
-         */ 
-        public static function withBody($body)
-        {
-            return \Bootstrapper\Panel::withBody($body);
-        }
-        
-        /**
-         * Sets the table of the panel
-         *
-         * @param string|\Table $table The table
-         * @return $this 
-         * @static 
-         */ 
-        public static function withTable($table)
-        {
-            return \Bootstrapper\Panel::withTable($table);
-        }
-        
-        /**
-         * Sets the footer
-         *
-         * @param string $footer The new footer
-         * @return $this 
-         * @static 
-         */ 
-        public static function withFooter($footer)
-        {
-            return \Bootstrapper\Panel::withFooter($footer);
-        }
-        
-        /**
-         * Creates a normal panel
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function normal()
-        {
-            return \Bootstrapper\Panel::normal();
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Panel::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Panel::addClass($classes);
-        }
-         
-    }
-
-    class ProgressBar {
-        
-        /**
-         * Renders the progress bar
+         * Renders the alert
          *
          * @return string 
          * @static 
          */ 
         public static function render()
         {
-            return \Bootstrapper\ProgressBar::render();
+            return \Bootstrapper\Alert::render();
         }
         
         /**
-         * Sets the type of the progress bar
+         * Creates an info alert box
          *
-         * @param string $type The type
+         * @param string $contents
          * @return $this 
          * @static 
          */ 
-        public static function setType($type)
+        public static function info($contents = '')
         {
-            return \Bootstrapper\ProgressBar::setType($type);
+            return \Bootstrapper\Alert::info($contents);
         }
         
         /**
-         * Sets the value of the progress bar
+         * Creates a success alert box
          *
-         * @param int $value The value of the progress bar The value of the
-         *                   progress bar
+         * @param string $contents
          * @return $this 
          * @static 
          */ 
-        public static function value($value)
+        public static function success($contents = '')
         {
-            return \Bootstrapper\ProgressBar::value($value);
+            return \Bootstrapper\Alert::success($contents);
         }
         
         /**
-         * Whether the amount should be visible
+         * Creates a warning alert box
          *
-         * @param string $string The string to show to the user. We internally
-         *                       will use sprintf to show this, so you must
-         *                       include a %s somewhere so we can add this in
+         * @param string $contents
          * @return $this 
          * @static 
          */ 
-        public static function visible($string = '%s%%')
+        public static function warning($contents = '')
         {
-            return \Bootstrapper\ProgressBar::visible($string);
+            return \Bootstrapper\Alert::warning($contents);
         }
         
         /**
-         * Creates a success progress bar
+         * Creates a danger alert box
          *
-         * @param int $value The value of the progress bar
+         * @param string $contents
          * @return $this 
          * @static 
          */ 
-        public static function success($value = 0)
+        public static function danger($contents = '')
         {
-            return \Bootstrapper\ProgressBar::success($value);
+            return \Bootstrapper\Alert::danger($contents);
         }
         
         /**
-         * Creates an info progress bar
+         * Sets the contents of the alert box
          *
-         * @param int $value The value of the progress bar
-         * @return $this 
-         * @static 
-         */ 
-        public static function info($value = 0)
-        {
-            return \Bootstrapper\ProgressBar::info($value);
-        }
-        
-        /**
-         * Creates a warning progress bar
-         *
-         * @param int $value The value of the progress bar
-         * @return $this 
-         * @static 
-         */ 
-        public static function warning($value = 0)
-        {
-            return \Bootstrapper\ProgressBar::warning($value);
-        }
-        
-        /**
-         * Creates a danger progress bar
-         *
-         * @param int $value The value of the progress bar
-         * @return $this 
-         * @static 
-         */ 
-        public static function danger($value = 0)
-        {
-            return \Bootstrapper\ProgressBar::danger($value);
-        }
-        
-        /**
-         * Creates a normal progress bar
-         *
-         * @param int $value The value of the progress bar
-         * @return $this 
-         * @static 
-         */ 
-        public static function normal($value = 0)
-        {
-            return \Bootstrapper\ProgressBar::normal($value);
-        }
-        
-        /**
-         * Sets the progress bar to be striped
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function striped()
-        {
-            return \Bootstrapper\ProgressBar::striped();
-        }
-        
-        /**
-         * Sets the progress bar to be animated
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function animated()
-        {
-            return \Bootstrapper\ProgressBar::animated();
-        }
-        
-        /**
-         * Stacks several progress bars together
-         *
-         * @param array $items The progress bars. Should be an array of arrays,
-         *                     which are a list of methods and parameters.
-         * @return string 
-         * @static 
-         */ 
-        public static function stack($items)
-        {
-            return \Bootstrapper\ProgressBar::stack($items);
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\ProgressBar::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\ProgressBar::addClass($classes);
-        }
-         
-    }
-
-    class Tabbable {
-        
-        /**
-         * Renders the tabbable object
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Tabbable::render();
-        }
-        
-        /**
-         * Creates content with a tabbed navigation
-         *
-         * @param array $contents The content
-         * @return $this 
-         * @see Bootstrapper\Navigation::$contents
-         * @static 
-         */ 
-        public static function tabs($contents = array())
-        {
-            return \Bootstrapper\Tabbable::tabs($contents);
-        }
-        
-        /**
-         * Creates content with a pill navigation
-         *
-         * @param array $contents
-         * @return $this 
-         * @see Bootstrapper\Navigation::$contents
-         * @static 
-         */ 
-        public static function pills($contents = array())
-        {
-            return \Bootstrapper\Tabbable::pills($contents);
-        }
-        
-        /**
-         * Sets the contents
-         *
-         * @param array $contents An array of arrays
-         * @return $this 
-         * @see Bootstrapper\Navigation::$contents
-         * @static 
-         */ 
-        public static function withContents($contents)
-        {
-            return \Bootstrapper\Tabbable::withContents($contents);
-        }
-        
-        /**
-         * Sets which tab should be active
-         *
-         * @param int $active
-         * @return $this 
-         * @static 
-         */ 
-        public static function active($active)
-        {
-            return \Bootstrapper\Tabbable::active($active);
-        }
-        
-        /**
-         * Sets the tabbable objects to fade in
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function fade()
-        {
-            return \Bootstrapper\Tabbable::fade();
-        }
-        
-        /**
-         * Set the attributes of the object
-         *
-         * @param array $attributes The attributes to use
-         * @return $this 
-         * @static 
-         */ 
-        public static function withAttributes($attributes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Tabbable::withAttributes($attributes);
-        }
-        
-        /**
-         * Adds the given classes to attributes
-         *
-         * @param array $classes
-         * @return $this 
-         * @static 
-         */ 
-        public static function addClass($classes)
-        {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Tabbable::addClass($classes);
-        }
-         
-    }
-
-    class Table {
-        
-        /**
-         * Renders the table
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function render()
-        {
-            return \Bootstrapper\Table::render();
-        }
-        
-        /**
-         * Sets the table to be striped
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function striped()
-        {
-            return \Bootstrapper\Table::striped();
-        }
-        
-        /**
-         * Sets the table to be bordered
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function bordered()
-        {
-            return \Bootstrapper\Table::bordered();
-        }
-        
-        /**
-         * Sets the table to have an active hover state
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function hover()
-        {
-            return \Bootstrapper\Table::hover();
-        }
-        
-        /**
-         * Sets the table to be condensed
-         *
-         * @return $this 
-         * @static 
-         */ 
-        public static function condensed()
-        {
-            return \Bootstrapper\Table::condensed();
-        }
-        
-        /**
-         * Sets the contents of the table
-         *
-         * @param array|\Bootstrapper\Traversable $contents The contents of the table. We expect
-         *                                    either an array of arrays or an
-         *                                    array of eloquent models
+         * @param $contents
          * @return $this 
          * @static 
          */ 
         public static function withContents($contents)
         {
-            return \Bootstrapper\Table::withContents($contents);
+            return \Bootstrapper\Alert::withContents($contents);
         }
         
         /**
-         * Creates a list of columns to ignore
+         * Adds a close button with the given text
          *
-         * @param array $ignores The ignored columns
+         * @param string $closer
          * @return $this 
          * @static 
          */ 
-        public static function ignore($ignores)
+        public static function close($closer = '&times;')
         {
-            return \Bootstrapper\Table::ignore($ignores);
-        }
-        
-        /**
-         * Adds a callback
-         *
-         * @param string $index The column name for the callback
-         * @param callable $function The callback function,
-         *                           which should be of the form
-         *                           function($column, $row).
-         * @return $this 
-         * @static 
-         */ 
-        public static function callback($index, $function)
-        {
-            return \Bootstrapper\Table::callback($index, $function);
-        }
-        
-        /**
-         * Sets which columns we can return
-         *
-         * @param array $only
-         * @return $this 
-         * @static 
-         */ 
-        public static function only($only)
-        {
-            return \Bootstrapper\Table::only($only);
-        }
-        
-        /**
-         * Sets content to be rendered in to the table footer
-         *
-         * @param string $footer
-         * @return $this 
-         * @static 
-         */ 
-        public static function withFooter($footer)
-        {
-            return \Bootstrapper\Table::withFooter($footer);
-        }
-        
-        /**
-         * Uses given class(es) on body TDs.
-         *
-         * @param mixed $classes The class(es) to apply.
-         * @return $this 
-         * @static 
-         */ 
-        public static function withBodyCellClass($classes)
-        {
-            return \Bootstrapper\Table::withBodyCellClass($classes);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function withClassOnCellsInColumn($columns, $classes)
-        {
-            return \Bootstrapper\Table::withClassOnCellsInColumn($columns, $classes);
+            return \Bootstrapper\Alert::close($closer);
         }
         
         /**
@@ -15022,7 +13433,7 @@ namespace Bootstrapper\Facades {
         public static function withAttributes($attributes)
         {
             //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Table::withAttributes($attributes);
+            return \Bootstrapper\Alert::withAttributes($attributes);
         }
         
         /**
@@ -15035,74 +13446,279 @@ namespace Bootstrapper\Facades {
         public static function addClass($classes)
         {
             //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Table::addClass($classes);
+            return \Bootstrapper\Alert::addClass($classes);
         }
          
     }
+ 
+}
 
-    class Thumbnail {
+namespace Acacha\AdminLTETemplateLaravel\Facades { 
+
+    class AdminLTE {
         
         /**
-         * Renders the thumbnail
+         * Home controller copy path.
          *
-         * @return string 
-         * @throws ThumbnailException if the image is not specified
+         * @return array 
          * @static 
          */ 
-        public static function render()
+        public static function homeController()
         {
-            return \Bootstrapper\Thumbnail::render();
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::homeController();
         }
         
         /**
-         * Sets the image for the thumbnail
+         * Auth register controller copy path.
          *
-         * @param string $image The image source
-         * @param array $attributes The attributes
-         * @return $this 
+         * @return array 
          * @static 
          */ 
-        public static function image($image, $attributes = array())
+        public static function registerController()
         {
-            return \Bootstrapper\Thumbnail::image($image, $attributes);
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::registerController();
         }
         
         /**
-         * Sets the caption for the thumbnail
+         * Auth login controller copy path.
          *
-         * @param string $caption The new caption
-         * @return $this 
+         * @return array 
          * @static 
          */ 
-        public static function caption($caption)
+        public static function loginController()
         {
-            return \Bootstrapper\Thumbnail::caption($caption);
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::loginController();
         }
         
         /**
-         * Set the attributes of the object
+         * Auth forgot password controller copy path.
          *
-         * @param array $attributes The attributes to use
-         * @return $this 
+         * @return array 
          * @static 
          */ 
-        public static function withAttributes($attributes)
+        public static function forgotPasswordController()
         {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Thumbnail::withAttributes($attributes);
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::forgotPasswordController();
         }
         
         /**
-         * Adds the given classes to attributes
+         * No guest Auth forgot password controller copy path.
          *
-         * @param array $classes
-         * @return $this 
+         * @return array 
          * @static 
          */ 
-        public static function addClass($classes)
+        public static function noGuestForgotPasswordController()
         {
-            //Method inherited from \Bootstrapper\RenderedObject            
-            return \Bootstrapper\Thumbnail::addClass($classes);
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::noGuestForgotPasswordController();
+        }
+        
+        /**
+         * Auth reset password controller copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function resetPasswordController()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::resetPasswordController();
+        }
+        
+        /**
+         * Public assets copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function publicAssets()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::publicAssets();
+        }
+        
+        /**
+         * Only views to overwrite.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function viewsToOverwrite()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::viewsToOverwrite();
+        }
+        
+        /**
+         * Path of sidebar.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function sidebarView()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::sidebarView();
+        }
+        
+        /**
+         * Views copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function views()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::views();
+        }
+        
+        /**
+         * Tests copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function tests()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::tests();
+        }
+        
+        /**
+         * Resource assets copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function resourceAssets()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::resourceAssets();
+        }
+        
+        /**
+         * Languages assets copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function languages()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::languages();
+        }
+        
+        /**
+         * Gravatar path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function gravatar()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::gravatar();
+        }
+        
+        /**
+         * Config path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function config()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::config();
+        }
+        
+        /**
+         * Spatie menu path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function spatieMenu()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::spatieMenu();
+        }
+        
+        /**
+         * Menu path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function menu()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::menu();
+        }
+        
+        /**
+         * Web routes path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function webroutes()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::webroutes();
+        }
+        
+        /**
+         * Api routes path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function apiroutes()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::apiroutes();
+        }
+        
+        /**
+         * Auth config file copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function authConfig()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::authConfig();
+        }
+        
+        /**
+         * User class copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function userClass()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::userClass();
+        }
+        
+        /**
+         * AppServiceProvider class copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function appServiceProviderClass()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::appServiceProviderClass();
+        }
+        
+        /**
+         * Dusk environment files copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function duskEnvironment()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::duskEnvironment();
+        }
+        
+        /**
+         * Database config copy path.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function databaseConfig()
+        {
+            return \Acacha\AdminLTETemplateLaravel\AdminLTE::databaseConfig();
         }
          
     }
@@ -16153,771 +14769,6 @@ namespace Collective\Html {
         }
          
     }
-
-    class HtmlFacade {
-        
-        /**
-         * Convert an HTML string to entities.
-         *
-         * @param string $value
-         * @return string 
-         * @static 
-         */ 
-        public static function entities($value)
-        {
-            return \Collective\Html\HtmlBuilder::entities($value);
-        }
-        
-        /**
-         * Convert entities to HTML characters.
-         *
-         * @param string $value
-         * @return string 
-         * @static 
-         */ 
-        public static function decode($value)
-        {
-            return \Collective\Html\HtmlBuilder::decode($value);
-        }
-        
-        /**
-         * Generate a link to a JavaScript file.
-         *
-         * @param string $url
-         * @param array $attributes
-         * @param bool $secure
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function script($url, $attributes = array(), $secure = null)
-        {
-            return \Collective\Html\HtmlBuilder::script($url, $attributes, $secure);
-        }
-        
-        /**
-         * Generate a link to a CSS file.
-         *
-         * @param string $url
-         * @param array $attributes
-         * @param bool $secure
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function style($url, $attributes = array(), $secure = null)
-        {
-            return \Collective\Html\HtmlBuilder::style($url, $attributes, $secure);
-        }
-        
-        /**
-         * Generate an HTML image element.
-         *
-         * @param string $url
-         * @param string $alt
-         * @param array $attributes
-         * @param bool $secure
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function image($url, $alt = null, $attributes = array(), $secure = null)
-        {
-            return \Collective\Html\HtmlBuilder::image($url, $alt, $attributes, $secure);
-        }
-        
-        /**
-         * Generate a link to a Favicon file.
-         *
-         * @param string $url
-         * @param array $attributes
-         * @param bool $secure
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function favicon($url, $attributes = array(), $secure = null)
-        {
-            return \Collective\Html\HtmlBuilder::favicon($url, $attributes, $secure);
-        }
-        
-        /**
-         * Generate a HTML link.
-         *
-         * @param string $url
-         * @param string $title
-         * @param array $attributes
-         * @param bool $secure
-         * @param bool $escape
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function link($url, $title = null, $attributes = array(), $secure = null, $escape = true)
-        {
-            return \Collective\Html\HtmlBuilder::link($url, $title, $attributes, $secure, $escape);
-        }
-        
-        /**
-         * Generate a HTTPS HTML link.
-         *
-         * @param string $url
-         * @param string $title
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function secureLink($url, $title = null, $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::secureLink($url, $title, $attributes);
-        }
-        
-        /**
-         * Generate a HTML link to an asset.
-         *
-         * @param string $url
-         * @param string $title
-         * @param array $attributes
-         * @param bool $secure
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function linkAsset($url, $title = null, $attributes = array(), $secure = null)
-        {
-            return \Collective\Html\HtmlBuilder::linkAsset($url, $title, $attributes, $secure);
-        }
-        
-        /**
-         * Generate a HTTPS HTML link to an asset.
-         *
-         * @param string $url
-         * @param string $title
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function linkSecureAsset($url, $title = null, $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::linkSecureAsset($url, $title, $attributes);
-        }
-        
-        /**
-         * Generate a HTML link to a named route.
-         *
-         * @param string $name
-         * @param string $title
-         * @param array $parameters
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function linkRoute($name, $title = null, $parameters = array(), $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::linkRoute($name, $title, $parameters, $attributes);
-        }
-        
-        /**
-         * Generate a HTML link to a controller action.
-         *
-         * @param string $action
-         * @param string $title
-         * @param array $parameters
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function linkAction($action, $title = null, $parameters = array(), $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::linkAction($action, $title, $parameters, $attributes);
-        }
-        
-        /**
-         * Generate a HTML link to an email address.
-         *
-         * @param string $email
-         * @param string $title
-         * @param array $attributes
-         * @param bool $escape
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function mailto($email, $title = null, $attributes = array(), $escape = true)
-        {
-            return \Collective\Html\HtmlBuilder::mailto($email, $title, $attributes, $escape);
-        }
-        
-        /**
-         * Obfuscate an e-mail address to prevent spam-bots from sniffing it.
-         *
-         * @param string $email
-         * @return string 
-         * @static 
-         */ 
-        public static function email($email)
-        {
-            return \Collective\Html\HtmlBuilder::email($email);
-        }
-        
-        /**
-         * Generates non-breaking space entities based on number supplied.
-         *
-         * @param int $num
-         * @return string 
-         * @static 
-         */ 
-        public static function nbsp($num = 1)
-        {
-            return \Collective\Html\HtmlBuilder::nbsp($num);
-        }
-        
-        /**
-         * Generate an ordered list of items.
-         *
-         * @param array $list
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString|string 
-         * @static 
-         */ 
-        public static function ol($list, $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::ol($list, $attributes);
-        }
-        
-        /**
-         * Generate an un-ordered list of items.
-         *
-         * @param array $list
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString|string 
-         * @static 
-         */ 
-        public static function ul($list, $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::ul($list, $attributes);
-        }
-        
-        /**
-         * Generate a description list of items.
-         *
-         * @param array $list
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function dl($list, $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::dl($list, $attributes);
-        }
-        
-        /**
-         * Build an HTML attribute string from an array.
-         *
-         * @param array $attributes
-         * @return string 
-         * @static 
-         */ 
-        public static function attributes($attributes)
-        {
-            return \Collective\Html\HtmlBuilder::attributes($attributes);
-        }
-        
-        /**
-         * Obfuscate a string to prevent spam-bots from sniffing it.
-         *
-         * @param string $value
-         * @return string 
-         * @static 
-         */ 
-        public static function obfuscate($value)
-        {
-            return \Collective\Html\HtmlBuilder::obfuscate($value);
-        }
-        
-        /**
-         * Generate a meta tag.
-         *
-         * @param string $name
-         * @param string $content
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function meta($name, $content, $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::meta($name, $content, $attributes);
-        }
-        
-        /**
-         * Generate an html tag.
-         *
-         * @param string $tag
-         * @param mixed $content
-         * @param array $attributes
-         * @return \Illuminate\Support\HtmlString 
-         * @static 
-         */ 
-        public static function tag($tag, $content, $attributes = array())
-        {
-            return \Collective\Html\HtmlBuilder::tag($tag, $content, $attributes);
-        }
-        
-        /**
-         * Register a custom macro.
-         *
-         * @param string $name
-         * @param object|callable $macro
-         * @return void 
-         * @static 
-         */ 
-        public static function macro($name, $macro)
-        {
-            \Collective\Html\HtmlBuilder::macro($name, $macro);
-        }
-        
-        /**
-         * Mix another object into the class.
-         *
-         * @param object $mixin
-         * @return void 
-         * @static 
-         */ 
-        public static function mixin($mixin)
-        {
-            \Collective\Html\HtmlBuilder::mixin($mixin);
-        }
-        
-        /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasMacro($name)
-        {
-            return \Collective\Html\HtmlBuilder::hasMacro($name);
-        }
-        
-        /**
-         * Dynamically handle calls to the class.
-         *
-         * @param string $method
-         * @param array $parameters
-         * @return mixed 
-         * @throws \BadMethodCallException
-         * @static 
-         */ 
-        public static function macroCall($method, $parameters)
-        {
-            return \Collective\Html\HtmlBuilder::macroCall($method, $parameters);
-        }
-        
-        /**
-         * Register a custom component.
-         *
-         * @param $name
-         * @param $view
-         * @param array $signature
-         * @return void 
-         * @static 
-         */ 
-        public static function component($name, $view, $signature)
-        {
-            \Collective\Html\HtmlBuilder::component($name, $view, $signature);
-        }
-        
-        /**
-         * Check if a component is registered.
-         *
-         * @param $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasComponent($name)
-        {
-            return \Collective\Html\HtmlBuilder::hasComponent($name);
-        }
-        
-        /**
-         * Dynamically handle calls to the class.
-         *
-         * @param string $method
-         * @param array $parameters
-         * @return \Illuminate\Contracts\View\View|mixed 
-         * @throws \BadMethodCallException
-         * @static 
-         */ 
-        public static function componentCall($method, $parameters)
-        {
-            return \Collective\Html\HtmlBuilder::componentCall($method, $parameters);
-        }
-         
-    }
- 
-}
-
-namespace Kris\LaravelFormBuilder\Facades { 
-
-    class FormBuilder {
-        
-        /**
-         * Create a Form instance.
-         *
-         * @param string $formClass The name of the class that inherits \Kris\LaravelFormBuilder\Form.
-         * @param array $options|null
-         * @param array $data|null
-         * @return \Form 
-         * @static 
-         */ 
-        public static function create($formClass, $options = array(), $data = array())
-        {
-            return \Kris\LaravelFormBuilder\FormBuilder::create($formClass, $options, $data);
-        }
-        
-        /**
-         * 
-         *
-         * @param $items
-         * @param array $options
-         * @param array $data
-         * @return mixed 
-         * @static 
-         */ 
-        public static function createByArray($items, $options = array(), $data = array())
-        {
-            return \Kris\LaravelFormBuilder\FormBuilder::createByArray($items, $options, $data);
-        }
-        
-        /**
-         * 
-         *
-         * @param $form
-         * @param $items
-         * @static 
-         */ 
-        public static function buildFormByArray($form, $items)
-        {
-            return \Kris\LaravelFormBuilder\FormBuilder::buildFormByArray($form, $items);
-        }
-        
-        /**
-         * Get instance of the empty form which can be modified
-         * Get the plain form class.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getFormClass()
-        {
-            return \Kris\LaravelFormBuilder\FormBuilder::getFormClass();
-        }
-        
-        /**
-         * Set the plain form class.
-         *
-         * @param string $class
-         * @static 
-         */ 
-        public static function setFormClass($class)
-        {
-            return \Kris\LaravelFormBuilder\FormBuilder::setFormClass($class);
-        }
-        
-        /**
-         * Get instance of the empty form which can be modified.
-         *
-         * @param array $options
-         * @param array $data
-         * @return \Kris\LaravelFormBuilder\Form 
-         * @static 
-         */ 
-        public static function plain($options = array(), $data = array())
-        {
-            return \Kris\LaravelFormBuilder\FormBuilder::plain($options, $data);
-        }
-        
-        /**
-         * Set depedencies and options on existing form instance
-         *
-         * @param \Kris\LaravelFormBuilder\Form $instance
-         * @param array $options
-         * @param array $data
-         * @return \Kris\LaravelFormBuilder\Form 
-         * @static 
-         */ 
-        public static function setDependenciesAndOptions($instance, $options = array(), $data = array())
-        {
-            return \Kris\LaravelFormBuilder\FormBuilder::setDependenciesAndOptions($instance, $options, $data);
-        }
-         
-    }
- 
-}
-
-namespace Acacha\AdminLTETemplateLaravel\Facades { 
-
-    class AdminLTE {
-        
-        /**
-         * Home controller copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function homeController()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::homeController();
-        }
-        
-        /**
-         * Auth register controller copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function registerController()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::registerController();
-        }
-        
-        /**
-         * Auth login controller copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function loginController()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::loginController();
-        }
-        
-        /**
-         * Auth forgot password controller copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function forgotPasswordController()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::forgotPasswordController();
-        }
-        
-        /**
-         * No guest Auth forgot password controller copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function noGuestForgotPasswordController()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::noGuestForgotPasswordController();
-        }
-        
-        /**
-         * Auth reset password controller copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function resetPasswordController()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::resetPasswordController();
-        }
-        
-        /**
-         * Public assets copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function publicAssets()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::publicAssets();
-        }
-        
-        /**
-         * Only views to overwrite.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function viewsToOverwrite()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::viewsToOverwrite();
-        }
-        
-        /**
-         * Path of sidebar.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function sidebarView()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::sidebarView();
-        }
-        
-        /**
-         * Views copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function views()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::views();
-        }
-        
-        /**
-         * Tests copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function tests()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::tests();
-        }
-        
-        /**
-         * Resource assets copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function resourceAssets()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::resourceAssets();
-        }
-        
-        /**
-         * Languages assets copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function languages()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::languages();
-        }
-        
-        /**
-         * Gravatar path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function gravatar()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::gravatar();
-        }
-        
-        /**
-         * Config path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function config()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::config();
-        }
-        
-        /**
-         * Spatie menu path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function spatieMenu()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::spatieMenu();
-        }
-        
-        /**
-         * Menu path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function menu()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::menu();
-        }
-        
-        /**
-         * Web routes path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function webroutes()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::webroutes();
-        }
-        
-        /**
-         * Api routes path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function apiroutes()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::apiroutes();
-        }
-        
-        /**
-         * Auth config file copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function authConfig()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::authConfig();
-        }
-        
-        /**
-         * User class copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function userClass()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::userClass();
-        }
-        
-        /**
-         * AppServiceProvider class copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function appServiceProviderClass()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::appServiceProviderClass();
-        }
-        
-        /**
-         * Dusk environment files copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function duskEnvironment()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::duskEnvironment();
-        }
-        
-        /**
-         * Database config copy path.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function databaseConfig()
-        {
-            return \Acacha\AdminLTETemplateLaravel\AdminLTE::databaseConfig();
-        }
-         
-    }
  
 }
 
@@ -17906,6 +15757,21 @@ namespace  {
             }
          
             /**
+             * Prepare the value and operator for a where clause.
+             *
+             * @param string $value
+             * @param string $operator
+             * @param bool $useDefault
+             * @return array 
+             * @throws \InvalidArgumentException
+             * @static 
+             */ 
+            public static function prepareValueAndOperator($value, $operator, $useDefault = false)
+            {    
+                return \Illuminate\Database\Query\Builder::prepareValueAndOperator($value, $operator, $useDefault);
+            }
+         
+            /**
              * Add a "where" clause comparing two columns to the query.
              *
              * @param string|array $first
@@ -18156,12 +16022,12 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param int $value
+             * @param mixed $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
              */ 
-            public static function whereTime($column, $operator, $value, $boolean = 'and')
+            public static function whereTime($column, $operator, $value = null, $boolean = 'and')
             {    
                 return \Illuminate\Database\Query\Builder::whereTime($column, $operator, $value, $boolean);
             }
@@ -18171,11 +16037,11 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param int $value
+             * @param mixed $value
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
              */ 
-            public static function orWhereTime($column, $operator, $value)
+            public static function orWhereTime($column, $operator, $value = null)
             {    
                 return \Illuminate\Database\Query\Builder::orWhereTime($column, $operator, $value);
             }
@@ -18326,6 +16192,35 @@ namespace  {
             public static function addWhereExistsQuery($query, $boolean = 'and', $not = false)
             {    
                 return \Illuminate\Database\Query\Builder::addWhereExistsQuery($query, $boolean, $not);
+            }
+         
+            /**
+             * Adds a where condition using row values.
+             *
+             * @param array $columns
+             * @param string $operator
+             * @param array $values
+             * @param string $boolean
+             * @return $this 
+             * @static 
+             */ 
+            public static function whereRowValues($columns, $operator, $values, $boolean = 'and')
+            {    
+                return \Illuminate\Database\Query\Builder::whereRowValues($columns, $operator, $values, $boolean);
+            }
+         
+            /**
+             * Adds a or where condition using row values.
+             *
+             * @param array $columns
+             * @param string $operator
+             * @param array $values
+             * @return $this 
+             * @static 
+             */ 
+            public static function orWhereRowValues($columns, $operator, $values)
+            {    
+                return \Illuminate\Database\Query\Builder::orWhereRowValues($columns, $operator, $values);
             }
          
             /**
@@ -19045,58 +16940,23 @@ namespace  {
 
     class View extends \Illuminate\Support\Facades\View {}
 
-    class Accordion extends \Bootstrapper\Facades\Accordion {}
+    class FormBuilder extends \Kris\LaravelFormBuilder\Facades\FormBuilder {}
 
-    class Alert extends \Bootstrapper\Facades\Alert {}
-
-    class Badge extends \Bootstrapper\Facades\Badge {}
-
-    class Breadcrumb extends \Bootstrapper\Facades\Breadcrumb {}
+    class Table extends \Bootstrapper\Facades\Table {}
 
     class Button extends \Bootstrapper\Facades\Button {}
 
-    class ButtonGroup extends \Bootstrapper\Facades\ButtonGroup {}
-
-    class Carousel extends \Bootstrapper\Facades\Carousel {}
-
-    class ControlGroup extends \Bootstrapper\Facades\ControlGroup {}
-
-    class DropdownButton extends \Bootstrapper\Facades\DropdownButton {}
-
-
-    class Helpers extends \Bootstrapper\Facades\Helpers {}
-
     class Icon extends \Bootstrapper\Facades\Icon {}
-
-    class InputGroup extends \Bootstrapper\Facades\InputGroup {}
-
-    class Image extends \Bootstrapper\Facades\Image {}
-
-    class Label extends \Bootstrapper\Facades\Label {}
-
-    class MediaObject extends \Bootstrapper\Facades\MediaObject {}
-
-    class Modal extends \Bootstrapper\Facades\Modal {}
 
     class Navbar extends \Bootstrapper\Facades\Navbar {}
 
     class Navigation extends \Bootstrapper\Facades\Navigation {}
 
-    class Panel extends \Bootstrapper\Facades\Panel {}
-
-    class ProgressBar extends \Bootstrapper\Facades\ProgressBar {}
-
-    class Tabbable extends \Bootstrapper\Facades\Tabbable {}
-
-    class Table extends \Bootstrapper\Facades\Table {}
-
-    class Thumbnail extends \Bootstrapper\Facades\Thumbnail {}
-
-    class FormBuilder extends \Kris\LaravelFormBuilder\Facades\FormBuilder {}
+    class Alert extends \Bootstrapper\Facades\Alert {}
 
     class AdminLTE extends \Acacha\AdminLTETemplateLaravel\Facades\AdminLTE {}
 
-    class HTML extends \Collective\Html\HtmlFacade {}
+    class Form extends \Collective\Html\FormFacade {}
 
     class Html extends \Collective\Html\HtmlFacade {}
  

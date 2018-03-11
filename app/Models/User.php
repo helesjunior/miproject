@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -13,6 +14,10 @@ use Bootstrapper\Interfaces\TableInterface;
 class User extends Authenticatable
 {
     use Notifiable;
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     use HasRoles;
     /**

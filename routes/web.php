@@ -19,7 +19,7 @@ Route::prefix('admin')->group(function (){
     Route::group([
         'namespace' => 'Admin\\',
         'as' => 'admin.',
-        'middleware' => 'auth'
+        'middleware' => 'role:sadmin'
         ], function (){
            Route::resource('users', 'UsersController');
     });

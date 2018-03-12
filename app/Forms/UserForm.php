@@ -9,7 +9,7 @@ class UserForm extends Form
     public function buildForm()
     {
 
-        $id = $this->getData('id')??"NULL";
+        $id = $this->getData('id') ?? "NULL";
 
         $this
             ->add('cpfcnpj', 'text', [
@@ -25,4 +25,5 @@ class UserForm extends Form
                 'rules' => "required|max:255|email|unique:users,email,{$id}"
             ]);
     }
+
 }

@@ -24,7 +24,6 @@ Route::group(['middleware' => 'auth'], function () {
             'middleware' => 'role:sadmin'
         ], function (){
             Route::resource('users', 'UsersController');
-            Route::resource('county', 'CountyController');
         });
     });
 });

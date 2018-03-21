@@ -43,7 +43,6 @@ class UsersController extends Controller
                     'name' => 'email',
                     'order' => true //true, asc ou desc
                 ]
-
             ])
             ->filters([
                 [
